@@ -1,1 +1,3 @@
 reswarm
+roboflow
+opencv-python
