@@ -1,7 +1,10 @@
-# from asyncio.events import get_event_loop
-# from asyncio import sleep
+from asyncio.events import get_event_loop
+from asyncio import sleep
 from reswarm import Reswarm
 from roboflow import Roboflow
+import cv2
+import numpy as np
+import base64
 
 rf = Roboflow(api_key="gi0b7TPcFZLVyeKO5Q42")
 project = rf.workspace().project("hard-hat-sample-wa2pe")
@@ -9,25 +12,26 @@ local_inference_server_address = "http://localhost:9001/"
 
 model = project.version(version_number=2, local=local_inference_server_address).model
 
+camera = cv2.VideoCapture(0)
+
 while True:
-    # Capture image from camera
-    camera = cv2.VideoCapture(0)
-    _, image = camera.read()
+    _, img = camera.read()
+
+    # Resize to improve speed
+    height, width, channels = img.shape
+    dim = min(height, width)
+    img = cv2.resize(img, (dim, dim))
 
     # Send image to Roboflow Predict
-    prediction = model.predict(image, confidence=40, overlap=30).json()
+    prediction = model.predict(img, confidence=40, overlap=30).json()
 
     # Print prediction results
-    print(prediction)
+    payload = prediction['predictions']
+    for pred in payload:
+        del pred['image_path']
 
-    # infer on a local image
-    # print(model.predict("your_image.jpg", confidence=40, overlap=30).json())
-
-    # visualize your prediction
-    # model.predict("your_image.jpg", confidence=40, overlap=30).save("prediction.jpg")
-
-    # infer on an image hosted elsewhere
-    # print(model.predict("URL_OF_YOUR_IMAGE", hosted=True, confidence=40, overlap=30).json())
+    if len(payload) > 0:
+        print(payload)
 
 # async def main():
 #     rw = Reswarm()
