@@ -44,15 +44,15 @@ async def predictLoop():
 async def publishLoop():
     rw = Reswarm()
 
-    # Publishes data every 2 seconds to the 're.hello.world' topic
+    # Publishes data every 2 seconds to the 're.roboflow.data' topic
     while True:
         await sleep(2)
-        # if len(prediction_buffer) == 0: continue
+        if len(prediction_buffer) == 0: continue
         data = prediction_buffer.copy()
         prediction_buffer.clear()
-        await rw.publish('re.hello.world', data)
+        await rw.publish('re.roboflow.data', data)
 
-        print(f'Published {data} to topic re.hello.world')
+        print(f'Published {data} to topic re.roboflow.data')
 
 
 async def main():
