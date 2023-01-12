@@ -24,3 +24,10 @@ ROBOFLOW_API_KEY:
     description: Your accounts API to interact with roboflow on your behalf
     secret: true
     optional: false
+
+PUBLISH_TOPIC:
+    label: Topic to pulish results on
+    type: text
+    defaultValue: roboflow.data
+    description: You can subscribe to this topic with a raw data table in a data pod (Data Studio). Note You need to connect the data pod to the swarm first.
+    optional: false

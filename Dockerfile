@@ -13,7 +13,6 @@ COPY requirements.txt ./
 
 RUN python3.11 -m pip install -r requirements.txt
 
-COPY engine.py /app/engine.py
-COPY entrypoint.sh /app/entrypoint.sh
+COPY . /app/
 
 ENTRYPOINT ["/app/entrypoint.sh"]

@@ -1,3 +1,4 @@
 reswarm
 roboflow==0.2.24
 opencv-python
+aiohttp
