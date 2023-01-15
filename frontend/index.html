@@ -3,13 +3,28 @@
   <head>
     <title>My Video</title>
   </head>
+
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+  </style>
+
   <body>
-    <video width="640" height="480" controls>
-      <source src="/video" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <div style="font-weight: bold; font-size: 18px;">Video Feed of Roboflow Project {{ project }}</div>
+    <div>Model Version: {{ model_version }}</div>
+    <div>Publish Results on Topic: {{ publish_to }}</div>
+    <img src="/image"/>
   </body>
+
   <script>
-    
+    setInterval(() => {
+      fetch('/image')
+        .then(response => response.blob())
+        .then(imageBlob => {
+          const objectURL = URL.createObjectURL(imageBlob);
+          document.querySelector('img').src = objectURL;
+        });
+    }, 100);
   </script>
 </html>

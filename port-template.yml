@@ -11,8 +11,5 @@
 
 ports:
   - name: Web interface       # Label of the port in the device's app settings
-    port: 19999               # Port under which a web server provides a user interface
+    port: 80               # Port under which a web server provides a user interface
     main: true                # This is the port used for the quick-access icon on a device's app list
-  - name: Video Stream
-    port: 4443
-    protocol: tcp             # Possible values: "https" | "tcp" (default: "https")

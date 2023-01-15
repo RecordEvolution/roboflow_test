@@ -3,9 +3,10 @@ from reswarm import Reswarm
 from roboflow import Roboflow
 import cv2
 import numpy as np
-import base64
 from datetime import datetime, timezone
 import os
+from aiohttp_jinja2 import setup, render_template_async
+import jinja2
 
 from aiohttp import web
 
@@ -19,6 +20,7 @@ camera = cv2.VideoCapture(0)
 print(camera)
 
 prediction_buffer = []
+latest_image = None
 
 async def predictLoop():
     print('starting predict loop')
@@ -35,14 +37,15 @@ async def predictLoop():
         # Resize to improve speed
         height, width, channels = img.shape
         dim = min(height, width)
-        img = cv2.resize(img, (dim, dim))
+        # img = cv2.resize(img, (dim, dim))
         # Send image to Roboflow Predict
         prediction = model.predict(img, confidence=40, overlap=30).json()
-
+        cv2.rectangle(img, (10,10,20,20), (0,255,0), 2)
         now = datetime.now(timezone.utc)
         # Print prediction results
         predictions = prediction['predictions']
         for box in predictions:
+            # example box result: [{'x': 234.3, 'y': 32.1, 'width': 44, 'height': 61, 'class': 'head', 'confidence': 0.557, 'prediction_type': 'ObjectDetectionModel'}]
             # cv2.rectangle(img, (box['x'], box['y']), (box['x'] + box['width'], box['y'] + box['height']), (0, 255, 0), 2)
             del box['image_path']
 
@@ -50,10 +53,10 @@ async def predictLoop():
             print(predictions)
             result = { "predictions": predictions, "timestamp": now.isoformat() }
             prediction_buffer.append(result)
-            # [{'x': 234.3, 'y': 32.1, 'width': 44, 'height': 61, 'class': 'head', 'confidence': 0.557, 'prediction_type': 'ObjectDetectionModel'}]
-        else:
-            print('nothing detected')
-
+        # else:
+        #     print('nothing detected')
+        global latest_image
+        latest_image = img
         # out.write(img)
         # sz = os.path.getsize('/app/output.mp4')
         # print(sz)
@@ -79,16 +82,28 @@ async def init_app(app):
     app['predictLoop'] = create_task(predictLoop())
 
 
-async def serve_video(request):
-    return web.FileResponse('/app/output.mp4', headers={'content-type': 'video/mp4'})
+# async def serve_video(request):
+#     return web.FileResponse('/app/output.mp4', headers={'content-type': 'video/mp4'})
+
+async def serve_image(request):
+    ret, buffer = cv2.imencode(".jpg", latest_image)
+    return web.Response(body=buffer.tobytes(), content_type="image/jpeg")
 
 async def index(request):
-    return web.FileResponse('/app/index.html')
+    return await render_template_async('index.html', request, {
+        "project": os.environ.get('PROJECT', 'no PROJECT specified'),
+        "model_version": os.environ.get('MODEL_VERSION', 'no MODEL_VERSION specified'),
+        "publish_to": os.environ.get('PUBLISH_TOPIC', 'no PUBLISH_TOPIC specified'),
+        })
+    # return web.FileResponse('/app/frontend/index.html')
 
 if __name__ == "__main__":
     
     web_app = web.Application()
-    web_app.router.add_get('/video', serve_video)
+    setup(web_app, enable_async=True, loader=jinja2.FileSystemLoader('/app/frontend'))
+
+    # web_app.router.add_get('/video', serve_video)
+    web_app.router.add_get('/image', serve_image)
     web_app.router.add_get('/', index)
     web_app.on_startup.append(init_app)
     web.run_app(web_app, host='0.0.0.0', port=80)
