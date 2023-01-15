@@ -10,11 +10,11 @@ import jinja2
 
 from aiohttp import web
 
-rf = Roboflow(api_key="gi0b7TPcFZLVyeKO5Q42")
-project = rf.workspace().project("hard-hat-sample-wa2pe")
+rf = Roboflow(api_key=os.environ['ROBOFLOW_API_KEY'])
+project = rf.workspace().project(os.environ['PROJECT'])
 local_inference_server_address = "http://localhost:9001/"
 
-model = project.version(version_number=2, local=local_inference_server_address).model
+model = project.version(version_number=os.environ['MODEL_VERSION'], local=local_inference_server_address).model
 
 camera = cv2.VideoCapture(0)
 print(camera)
