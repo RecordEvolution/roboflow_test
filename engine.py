@@ -39,7 +39,8 @@ async def predictLoop():
         dim = min(height, width)
         # img = cv2.resize(img, (dim, dim))
         # Send image to Roboflow Predict
-        prediction = model.predict(img, confidence=40, overlap=30).json()
+        print('predict...')
+        prediction = model.predict(img).json()
         now = datetime.now(timezone.utc)
         # Print prediction results
         predictions = prediction['predictions']
@@ -85,6 +86,9 @@ async def init_app(app):
 #     return web.FileResponse('/app/output.mp4', headers={'content-type': 'video/mp4'})
 
 async def serve_image(request):
+    global latest_image
+    if latest_image is None:
+        return web.Response(text='no image received from camera', content_type='text/plain')
     ret, buffer = cv2.imencode(".jpg", latest_image)
     return web.Response(body=buffer.tobytes(), content_type="image/jpeg")
 
