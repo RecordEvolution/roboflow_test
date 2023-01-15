@@ -34,9 +34,11 @@ async def predictLoop():
             print('no image read from camera')
             continue
             
+        global latest_image
+        latest_image = img
         # Resize to improve speed
-        height, width, channels = img.shape
-        dim = min(height, width)
+        # height, width, channels = img.shape
+        # dim = min(height, width)
         # img = cv2.resize(img, (dim, dim))
         # Send image to Roboflow Predict
         print('predict...')
@@ -46,8 +48,12 @@ async def predictLoop():
         predictions = prediction['predictions']
         for box in predictions:
             # example box result: [{'x': 234.3, 'y': 32.1, 'width': 44, 'height': 61, 'class': 'head', 'confidence': 0.557, 'prediction_type': 'ObjectDetectionModel'}]
-            # cv2.rectangle(img, (box['x'], box['y']), (box['x'] + box['width'], box['y'] + box['height']), (0, 255, 0), 2)
+            start = (int(box['x']) - int(box['width']/2), int(box['y']) - int(box['height']/2))
+            end = (int(box['x']) + int(box['width']/2), int(box['y']) + int(box['height']/2))
+            cv2.rectangle(img, start, end, (0, 255, 0), 2)
+            # latest_image = np.copy(box['image_path'])
             del box['image_path']
+
 
         if len(predictions) > 0:
             print(predictions)
@@ -55,8 +61,7 @@ async def predictLoop():
             prediction_buffer.append(result)
         # else:
         #     print('nothing detected')
-        global latest_image
-        latest_image = img
+
         # out.write(img)
         # sz = os.path.getsize('/app/output.mp4')
         # print(sz)
