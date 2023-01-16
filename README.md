@@ -19,15 +19,26 @@ On an installed app you enter these parameters in the paramter menu:
 <img src="https://storage.googleapis.com/reswarm-images/Roboflow_screen2.png" width="300px"/>
 </div>
 
+# Inspecting the Video Output
+
+To get a live view of each of the cameras in your swarm you need to enable the remote access feature on the cameras.
+
+You do this in the settings of the installed app:
+
+<img src="https://storage.googleapis.com/reswarm-images/Roboflow_settings.png" width="300px"/>
+
+
 # Data Collection
 
 The models provide the detection results as a json file that can be sent to a Data Pod within the platform.
 
-To publish data this app uses the integrated WAMP message broker and uses the Topic given by you in the paramters of the App.
+To publish data, this app uses the integrated WAMP message broker and uses the topic given by you in the paramters of the App:
 
 Parameter | Description
 --- | ---
 Publish Topic | The topic under which subscribers in a Data Pod can receive the data.
+
+Note that the image itself is not part of the message payload.
 
 To receive the json data in a Data Pod you need to 
 
@@ -36,6 +47,13 @@ To receive the json data in a Data Pod you need to
 
 Then the Raw Table will accumulate all the published data from all devices in the swarm.
 Note that the originating Device Serial and Device Name are always contained in the message.
+
+# Privacy
+
+The app runs on the edge close to the camera and only provides the detection information to subscribed clients.
+The video footage itself is neither recorded nor sent to the cloud.
+
+This ensures the conformity with privacy regulations like the GDPR.
 
 # Production Use
 
