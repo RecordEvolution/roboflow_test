@@ -6,6 +6,14 @@
 # NOTE: Template entries without a label property will not be displayed
 # NOTE: the "label" and "type" must be present on each variable
 
+ROBOFLOW_API_KEY:
+    label: Roboflow API Key
+    # defaultValue: gi0b7TPcFZLVyeKO5Q42
+    type: text
+    description: Your accounts API to interact with roboflow on your behalf
+    secret: true
+    optional: false
+
 PROJECT:                                      # The name of the environment variable that contains the user provided value
     label: Project                            # Label displayed above the input field. (string)
     # defaultValue: plants-vf2vr
@@ -19,13 +27,22 @@ MODEL_VERSION:
     # defaultValue: 8
     description: The model version you want to execute
     optional: false
-ROBOFLOW_API_KEY:
-    label: Roboflow API Key
-    # defaultValue: gi0b7TPcFZLVyeKO5Q42
-    type: text
-    description: Your accounts API to interact with roboflow on your behalf
-    secret: true
-    optional: false
+
+CONFIDENCE_THRESHOLD:    
+    label: Confidence Threshold
+    type: numeric
+    minValue: 0
+    maxValue: 1
+    defaultValue: 0.5
+    description: From what detection score should a detection be considered a match.
+
+OVERLAP_THRESHOLD:
+    label: Overlap Threshold
+    type: numeric
+    minValue: 0
+    maxValue: 1
+    defaultValue: 0.5
+    description: The minimum amount of overlap required between two bounding boxes in order for them to be considered a match.
 
 PUBLISH_TOPIC:
     label: Topic to pulish results on

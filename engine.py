@@ -58,7 +58,7 @@ async def predictLoop():
         # img = cv2.resize(img, (dim, dim))
         # Send image to Roboflow Predict
         print('predict...')
-        prediction = model.predict(img).json()
+        prediction = model.predict(img, confidence=os.environ['CONFIDENCE_THRESHOLD'], overlap=os.environ['OVERLAP_THRESHOLD']).json()
         now = datetime.now(timezone.utc)
         # Print prediction results
         predictions = prediction['predictions']
