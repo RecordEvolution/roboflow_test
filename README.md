@@ -1,6 +1,6 @@
 # Roboflow Model Tester
 
-This App allows you to use models from the Roboflow Vision AI platform on your camera Swarm. The Roboflow platform has a library with a lot of readily trained models provided by the community.
+This App allows you to use models from the [Roboflow Vision AI platform](https://roboflow.com/) on your camera Swarm. The Roboflow platform has a library with a lot of readily trained models provided by the community in the [Roboflow Universe](https://universe.roboflow.com/).
 
 <img src="https://storage.googleapis.com/reswarm-images/Roboflow_universe.png" width="600px;" style="margin-bottom: 24px;">
 
