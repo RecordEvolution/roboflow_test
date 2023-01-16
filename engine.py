@@ -14,10 +14,26 @@ rf = Roboflow(api_key=os.environ['ROBOFLOW_API_KEY'])
 project = rf.workspace().project(os.environ['PROJECT'])
 local_inference_server_address = "http://localhost:9001/"
 
-model = project.version(version_number=os.environ['MODEL_VERSION'], local=local_inference_server_address).model
+model = project.version(version_number=os.environ.get('MODEL_VERSION', None), local=local_inference_server_address).model
 
-camera = cv2.VideoCapture(0)
-print(camera)
+
+def create_connection_from_env():
+    rtsp_user = os.getenv("RTSP_USERNAME", "")
+    rtsp_pwd = os.getenv("RTSP_PASSWORD", "")
+    rtsp_ip = os.getenv("RTSP_IP", "")
+
+    if rtsp_user != "" and rtsp_pwd != "" and rtsp_ip != "":
+        print("Using env variables 'RTSP_IP', 'RTSP_USERNAME' & 'RTSP_PASSWORD' for RTSP Stream")
+        rtsp_conn = f"rtsp://{rtsp_user}:{rtsp_pwd}@{rtsp_ip}/1"
+        print(f"rtsp://{rtsp_user}:*****@{rtsp_ip}/1")
+        return rtsp_conn
+    else:
+        print("Using USB Camera")
+        camera_idx = int(os.getenv("USB_CAMERA_IDX", 0))
+        return camera_idx
+
+
+camera = cv2.VideoCapture(create_connection_from_env())
 
 prediction_buffer = []
 latest_image = None

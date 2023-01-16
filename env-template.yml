@@ -8,7 +8,7 @@
 
 PROJECT:                                      # The name of the environment variable that contains the user provided value
     label: Project                            # Label displayed above the input field. (string)
-    # defaultValue: field-plantvillage
+    defaultValue: plants-vf2vr
     type: text                          # Type of value. ('numeric' | 'text' | 'boolean')
     description: The Roboflow project name you want to execute      # Description. (string)
     secret: false                           # Makes value invisible once set. (boolean)
@@ -16,12 +16,12 @@ PROJECT:                                      # The name of the environment vari
 MODEL_VERSION:
     label: Model Version
     type: text
-    defaultValue: 1
+    defaultValue: 8
     description: The model version you want to execute
     optional: false
 ROBOFLOW_API_KEY:
     label: Roboflow API Key
-    # defaultValue: gi0b7TPcFZLVyeKO5Q42
+    defaultValue: gi0b7TPcFZLVyeKO5Q42
     type: text
     description: Your accounts API to interact with roboflow on your behalf
     secret: true
@@ -33,3 +33,36 @@ PUBLISH_TOPIC:
     defaultValue: roboflow.data
     description: You can subscribe to this topic with a raw data table in a data pod (Data Studio). Note You need to connect the data pod to the swarm first.
     optional: false
+
+
+RTSP_USERNAME:
+    defaultValue: admin
+    description: 'Username RTSP Stream'
+    label: 'Username RTSP Stream'
+    type: text
+    optional: true
+
+RTSP_IP:
+    # defaultValue: 192.168.1.64
+    description: 'Ip of RTSP Stream'
+    label: 'Ip of RTSP Stream'
+    type: text
+    optional: true
+
+RTSP_PASSWORD:
+    # defaultValue: receVo2Base!
+    description: 'Password RTSP Stream'
+    label: 'Password RTSP Stream'
+    type: text
+    secret: true
+    optional: true
+
+USB_CAMERA_IDX:
+    defaultValue: 0
+    description: 'Index of USB Camera'
+    label: 'Index of USB Camera'
+    type: numeric
+    step: 1
+    min: 0
+    max: 100
+    optional: true
