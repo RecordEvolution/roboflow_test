@@ -8,7 +8,7 @@
 
 PROJECT:                                      # The name of the environment variable that contains the user provided value
     label: Project                            # Label displayed above the input field. (string)
-    defaultValue: plants-vf2vr
+    # defaultValue: plants-vf2vr
     type: text                          # Type of value. ('numeric' | 'text' | 'boolean')
     description: The Roboflow project name you want to execute      # Description. (string)
     secret: false                           # Makes value invisible once set. (boolean)
@@ -16,12 +16,12 @@ PROJECT:                                      # The name of the environment vari
 MODEL_VERSION:
     label: Model Version
     type: text
-    defaultValue: 8
+    # defaultValue: 8
     description: The model version you want to execute
     optional: false
 ROBOFLOW_API_KEY:
     label: Roboflow API Key
-    defaultValue: gi0b7TPcFZLVyeKO5Q42
+    # defaultValue: gi0b7TPcFZLVyeKO5Q42
     type: text
     description: Your accounts API to interact with roboflow on your behalf
     secret: true
