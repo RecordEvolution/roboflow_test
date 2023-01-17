@@ -19,6 +19,14 @@ On an installed app you enter these parameters in the paramter menu:
 <img src="https://storage.googleapis.com/reswarm-images/Roboflow_screen2.png" width="300px"/>
 </div>
 
+# Using your own Camera Device Hardware
+
+To use the Roboflow Test app on your own edge PC hardware with an attached camera, you need to register your edge PD in a Swarm in the Record Evolution edge platform.
+
+Just a few steps are required depending on the kind of device you are using.
+Please take a look at our documentation [here](https://docs.record-evolution.de/#/en/Reswarm/connect-devices).
+
+
 # Inspecting the Video Output
 
 To get a live view of each of the cameras in your swarm you need to enable the remote access feature on the cameras.
@@ -27,6 +35,7 @@ You do this in the settings of the installed app:
 
 <img src="https://storage.googleapis.com/reswarm-images/Roboflow_settings.png" width="300px"/>
 
+Once the remote access is enabled a little globe badge is added to the app icon. Now just click the app icon and the video feed opens in a new browser window.
 
 # Data Collection
 
