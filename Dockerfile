@@ -1,6 +1,6 @@
 FROM roboflow/inference-server:jetson
 
-ENV DEBIAN_FRONTEND=noninteractive
+# ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get --fix-broken install -y && apt-get update && apt-get install -y \
     software-properties-common
