@@ -4,7 +4,7 @@ This App allows you to use models from the [Roboflow Vision AI platform](https:/
 
 <img src="https://storage.googleapis.com/reswarm-images/Roboflow_universe.png" width="600px;" style="margin-bottom: 24px;">
 
-You can use any of the provided models by providing the following parameters at the installed app:
+You can use any of the these models by providing the following parameters at the installed app:
 
 Parameter | Description
 --- | ---
@@ -19,13 +19,6 @@ On an installed app you enter these parameters in the paramter menu:
     <img src="https://storage.googleapis.com/reswarm-images/Roboflow_screen2.png" width="300px"/>
 </div>
 
-# Using your own Camera Device Hardware
-
-To use the Roboflow Test app on your own edge PC hardware with an attached camera, you need to register your edge PC in a Swarm in the Record Evolution edge platform.
-
-Just a few steps are required depending on the kind of device you are using.
-Please take a look at our documentation [here](https://docs.record-evolution.de/#/en/Reswarm/connect-devices).
-
 
 # Inspecting the Video Output
 
@@ -39,6 +32,14 @@ Once the remote access is enabled a little globe badge is added to the app icon.
     <img src="https://storage.googleapis.com/reswarm-images/Roboflow_public_badge.png" width="300px"/>
     <img src="https://storage.googleapis.com/reswarm-images/Roboflow_plants_video.png" width="300px"/>
 </div>
+
+# Using your own Camera Device Hardware
+
+To use the Roboflow Test app on your own edge PC hardware with an attached camera, you need to register your edge PC in a Swarm in the Record Evolution edge platform.
+
+Just a few steps are required depending on the kind of device you are using.
+Please take a look at our documentation [here](https://docs.record-evolution.de/#/en/Reswarm/connect-devices).
+
 
 
 # Data Collection
@@ -70,7 +71,7 @@ This ensures the conformity with privacy regulations like the GDPR.
 
 # Production Use
 
-For production use it is advised to create and maintain a new app for each model. 
+For production we suggest to create and maintain a new app for each model. 
 So different apps for e.g. hard hat detection, people counting, plant detection and so on.
 
 This would also allow you to run multiple models on the same device at the same time.

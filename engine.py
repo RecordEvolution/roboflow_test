@@ -72,7 +72,7 @@ async def predictLoop():
 
 
         if len(predictions) > 0:
-            print(predictions)
+            # print(predictions)
             result = { "predictions": predictions, "timestamp": now.isoformat() }
             prediction_buffer.append(result)
         # else:
@@ -95,8 +95,8 @@ async def publishLoop():
         data = prediction_buffer.copy()
         prediction_buffer.clear()
         await rw.publish(os.environ.get('PUBLISH_TOPIC'), data)
-
-        print(f'Published {data} to topic ' + os.environ.get('PUBLISH_TOPIC'))
+        sample = data[0]
+        print(f'Published to topic ' + os.environ.get('PUBLISH_TOPIC') + f' {sample}')
 
 async def init_app(app):
     app['publishLoop'] = create_task(publishLoop())
